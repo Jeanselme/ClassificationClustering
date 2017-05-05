@@ -1,4 +1,5 @@
-from clustering import hierarchicalCluster
+from clustering import hierarchicalCluster, selectionHierarchicalCluster
+from dendrogram import plotDendrogram
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,7 +25,9 @@ label = np.concatenate(([[1,0]]*numberPoint, [[0,1]]*numberPoint))
 
 # Clusters them
 clusters = hierarchicalCluster(data, label)
+selection = selectionHierarchicalCluster(clusters)
 plt.figure("Clusters")
-for c in clusters:
+for c in selection:
     plt.scatter(c.points[:,0], c.points[:,1])
-plt.show()
+    
+plotDendrogram(clusters[0])

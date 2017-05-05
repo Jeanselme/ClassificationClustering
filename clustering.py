@@ -36,16 +36,17 @@ class singleton(cluster):
         self.points = point.reshape((1,-1))
         self.labels = label.reshape((1,-1))
         self.centroid = self.points
+        self.children = []
 
 
-def hierarchicalCluster(data, labels, ratioMin = 0.9):
+def hierarchicalCluster(data, labels):
     """
     Computes on the given data (data) which are labeled (2d array binary labels)
     (first dimension needs to be the same for these 2d arrays) a hierarchical clustering
-    Selects every clusters which satisfy the ratioMin criterion
     """
     clusters = [singleton(data[i], labels[i]) for i in range(len(data))]
 
+    # TODO : Take advantage of the data previously computed
     while len(clusters) != 1:
         # Computes the distance matrix between clusters
         matrixDistance = np.zeros((len(clusters), len(clusters)))
@@ -71,6 +72,13 @@ def hierarchicalCluster(data, labels, ratioMin = 0.9):
         clusters = [clusters[k] for k in range(len(clusters)) if k not in [i,j] ]
         clusters.append(newCluster)
 
+    return clusters
+
+def selectionHierarchicalCluster(clusters, ratioMin = 0.9):
+    """
+    Takes all the computed clusters and select the one which have an higher ratio
+    then ratioMin
+    """
     resultClusters = []
     # While we have not found what we want computes the research
     while clusters != []:
