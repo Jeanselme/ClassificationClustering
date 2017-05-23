@@ -13,6 +13,8 @@ class cluster:
         self.centroid = np.mean(np.concatenate([child.centroid for child in children]), axis = 0).reshape((1,-1))
         self.children = children
 
+        self.distance = 0
+
     def __add__(self, other):
         """
         Merges two clusters
@@ -37,6 +39,7 @@ class singleton(cluster):
         self.labels = label.reshape((1,-1))
         self.centroid = self.points
         self.children = []
+        self.distance = 0
 
 
 def hierarchicalCluster(data, labels):
@@ -66,6 +69,7 @@ def hierarchicalCluster(data, labels):
         # Merge the two closest clusters which are able to evolve
         # ie which has not encountred the stopRation criterion
         newCluster =  clusters[i] + clusters[j]
+        newCluster.distance = matrixDistance[i,j]
 
         ### Update the new centroids by removing the two previous ones and
         ### adding the new one

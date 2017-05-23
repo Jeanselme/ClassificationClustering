@@ -11,8 +11,12 @@ def plotCluster(cluster, parentPosition, number, totalNumberChild, width, colors
     color = np.sum([mean[i]/mean.sum()* colors[i] for i in range(len(colors))], axis=0)
 
     # Computes and plots the position of the node
-    currentPosition = parentPosition + [(width * number/(totalNumberChild-1)-width/2), 1]
-    plt.plot([parentPosition[0], currentPosition[0]], [parentPosition[1], currentPosition[1]],
+    currentPosition = parentPosition + [(width * number/(totalNumberChild-1)-width/2), 0]
+    currentPosition[1] = cluster.distance
+
+    plt.plot([parentPosition[0], currentPosition[0]], [parentPosition[1], parentPosition[1]],
+        color = color)
+    plt.plot([currentPosition[0], currentPosition[0]], [parentPosition[1], currentPosition[1]],
         color = color)
 
     # Calls over all children
@@ -41,9 +45,8 @@ def plotDendrogram(cluster, colors = None, labels = None):
     ax.legend(loc="lower left", markerscale=0.7, scatterpoints=1, fontsize=10)
 
     # Plot the initial node and recurse
-    plotCluster(cluster, np.array((0,0)), 1, 3, 100, colors)
-    ax.set_ylabel("Depth")
-    ax.invert_yaxis()
+    plotCluster(cluster, np.array((0,cluster.distance)), 1, 3, 100, colors)
+    ax.set_ylabel("Distance")
     ax.get_xaxis().set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
