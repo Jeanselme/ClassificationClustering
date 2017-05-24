@@ -17,6 +17,8 @@ It is not envisageable to do both computation in the same time because by stoppi
 # Example
 The following figures are obtained thanks to the script example.py, which plots two gaussians (first image) and cluster them with a ratio of categories of 90\%.  
 ![Gaussian](https://raw.githubusercontent.com/Jeanselme/ClassificationClustering/master/Images/gaussians.png)   ![Cluster](https://raw.githubusercontent.com/Jeanselme/ClassificationClustering/master/Images/clusters.png)  
+And the last one show the corresponding dendrogram :  
+![Dendrogram](https://raw.githubusercontent.com/Jeanselme/ClassificationClustering/master/Images/dendrogram.png)  
 
 # Dependencies
 Executed with python3.5 with the library matplotlib and numpy.
